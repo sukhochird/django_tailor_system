@@ -66,7 +66,7 @@
                                 {% if order.remaining_amount == 0 %}
                                     <span class="text-green-600">Бүрэн төлсөн</span>
                                 {% else %}
-                                    <span class="text-red-600">{% show_currency order.remaining_amount %}</span>
+                                    <span class="text-red-600">{{ order.remaining_amount|format_currency }}</span>
                                 {% endif %}
                             </p>
                         </div>
