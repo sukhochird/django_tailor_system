@@ -27,12 +27,25 @@ class OrderForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         label="Өмдний оёдолчин"
     )
+    assigned_shirt_cutter = forms.ModelChoiceField(
+        queryset=Employee.objects.none(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Цамцны эсгүүрчин"
+    )
+    assigned_shirt_sewer = forms.ModelChoiceField(
+        queryset=Employee.objects.none(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Цамцны оёдолчин"
+    )
     
     class Meta:
         model = Order
         fields = [
-            'customer', 'item_type', 'material_code',
+            'customer', 'item_type', 'material_code', 'has_shirt',
             'assigned_tailor', 'assigned_cutter', 'assigned_trouser_maker',
+            'assigned_shirt_cutter', 'assigned_shirt_sewer',
             'total_amount', 'advance_amount', 'start_date', 'due_date', 'notes',
             'design_front', 'design_back', 'design_side', 'design_reference'
         ]
@@ -40,6 +53,7 @@ class OrderForm(forms.ModelForm):
             'customer': forms.Select(attrs={'class': 'form-control'}),
             'item_type': forms.Select(attrs={'class': 'form-control'}),
             'material_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Материалын код'}),
+            'has_shirt': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'total_amount': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Жишээ: 1,800,000'}),
             'advance_amount': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Жишээ: 500,000'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
@@ -66,6 +80,12 @@ class OrderForm(forms.ModelForm):
         
         self.fields['assigned_trouser_maker'].queryset = all_employees
         self.fields['assigned_trouser_maker'].label_from_instance = lambda obj: f"{obj.first_name} ({obj.get_employee_type_display()})"
+        
+        self.fields['assigned_shirt_cutter'].queryset = all_employees
+        self.fields['assigned_shirt_cutter'].label_from_instance = lambda obj: f"{obj.first_name} ({obj.get_employee_type_display()})"
+        
+        self.fields['assigned_shirt_sewer'].queryset = all_employees
+        self.fields['assigned_shirt_sewer'].label_from_instance = lambda obj: f"{obj.first_name} ({obj.get_employee_type_display()})"
         
         # Set default dates
         from datetime import date, timedelta

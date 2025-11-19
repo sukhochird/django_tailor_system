@@ -70,6 +70,25 @@ class Order(models.Model):
         related_name='trouser_maker_orders',
         verbose_name="Өмдний оёдолчин"
     )
+    assigned_shirt_cutter = models.ForeignKey(
+        Employee, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='shirt_cutter_orders',
+        verbose_name="Цамцны эсгүүрчин"
+    )
+    assigned_shirt_sewer = models.ForeignKey(
+        Employee, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='shirt_sewer_orders',
+        verbose_name="Цамцны оёдолчин"
+    )
+    
+    # Цамцтай эсэх
+    has_shirt = models.BooleanField(default=False, verbose_name="Цамцтай")
     
     # Үнийн мэдээлэл
     total_amount = models.DecimalField(

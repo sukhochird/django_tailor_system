@@ -107,12 +107,12 @@
                         {% endif %}
                     </div>
                     
-                    {% if order.notes %}
+<!--                    {% if order.notes %}-->
                     <div class="mt-6">
                         <label class="block text-sm font-medium text-gray-500 mb-1">Тэмдэглэл</label>
                         <p class="text-gray-900">{{ order.notes }}</p>
                     </div>
-                    {% endif %}
+<!--                    {% endif %}-->
                 </div>
 
                 <!-- Order Timeline -->
@@ -299,53 +299,112 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Томилогдсон ажилтнууд</h3>
                     
-                    <div class="space-y-4">
-                        {% if order.assigned_tailor %}
-                        <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
-                            <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+                    <div class="space-y-6">
+                        <!-- Хослолын оёдолчид -->
+                        <div>
+                            <h4 class="text-md font-semibold text-gray-800 mb-3">Хослолын оёдолчид</h4>
+                            <div class="space-y-3">
+                                {% if order.assigned_tailor %}
+                                <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Оёдолчин</p>
+                                        <p class="text-sm text-gray-600">{{ order.assigned_tailor.full_name }}</p>
+                                        {% if order.assigned_tailor.phone %}
+                                            <p class="text-xs text-gray-500">{{ order.assigned_tailor.phone }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if order.assigned_cutter %}
+                                <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="scissors" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Эсгүүрчин</p>
+                                        <p class="text-sm text-gray-600">{{ order.assigned_cutter.full_name }}</p>
+                                        {% if order.assigned_cutter.phone %}
+                                            <p class="text-xs text-gray-500">{{ order.assigned_cutter.phone }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if order.assigned_trouser_maker %}
+                                <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="ruler" class="w-5 h-5 text-purple-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Өмдний оёдолчин</p>
+                                        <p class="text-sm text-gray-600">{{ order.assigned_trouser_maker.full_name }}</p>
+                                        {% if order.assigned_trouser_maker.phone %}
+                                            <p class="text-xs text-gray-500">{{ order.assigned_trouser_maker.phone }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if not order.assigned_tailor and not order.assigned_cutter and not order.assigned_trouser_maker %}
+                                <div class="text-center py-4 bg-gray-50 rounded-lg">
+                                    <p class="text-xs text-gray-500">Хослолын оёдолчид томилогдоогүй</p>
+                                </div>
+                                {% endif %}
                             </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-gray-900">Оёдолчин</p>
-                                <p class="text-sm text-gray-600">{{ order.assigned_tailor.full_name }}</p>
-                                {% if order.assigned_tailor.phone %}
-                                    <p class="text-xs text-gray-500">{{ order.assigned_tailor.phone }}</p>
+                        </div>
+                        
+                        <!-- Цамцны ажилтнууд -->
+                        {% if order.has_shirt %}
+                        <div class="pt-4 border-t border-gray-200">
+                            <h4 class="text-md font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                <i data-lucide="shirt" class="w-4 h-4 text-blue-600"></i>
+                                Цамцны ажилтнууд
+                            </h4>
+                            <div class="space-y-3">
+                                {% if order.assigned_shirt_cutter %}
+                                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="scissors" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Цамцны эсгүүрчин</p>
+                                        <p class="text-sm text-gray-600">{{ order.assigned_shirt_cutter.full_name }}</p>
+                                        {% if order.assigned_shirt_cutter.phone %}
+                                            <p class="text-xs text-gray-500">{{ order.assigned_shirt_cutter.phone }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if order.assigned_shirt_sewer %}
+                                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Цамцны оёдолчин</p>
+                                        <p class="text-sm text-gray-600">{{ order.assigned_shirt_sewer.full_name }}</p>
+                                        {% if order.assigned_shirt_sewer.phone %}
+                                            <p class="text-xs text-gray-500">{{ order.assigned_shirt_sewer.phone }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if not order.assigned_shirt_cutter and not order.assigned_shirt_sewer %}
+                                <div class="text-center py-4 bg-blue-50 rounded-lg">
+                                    <p class="text-xs text-gray-500">Цамцны ажилтнууд томилогдоогүй</p>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>
                         {% endif %}
                         
-                        {% if order.assigned_cutter %}
-                        <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
-                            <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                <i data-lucide="scissors" class="w-5 h-5 text-green-600"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-gray-900">Эсгүүрчин</p>
-                                <p class="text-sm text-gray-600">{{ order.assigned_cutter.full_name }}</p>
-                                {% if order.assigned_cutter.phone %}
-                                    <p class="text-xs text-gray-500">{{ order.assigned_cutter.phone }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% endif %}
-                        
-                        {% if order.assigned_trouser_maker %}
-                        <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
-                            <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                <i data-lucide="ruler" class="w-5 h-5 text-purple-600"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-gray-900">Өмдний оёдолчин</p>
-                                <p class="text-sm text-gray-600">{{ order.assigned_trouser_maker.full_name }}</p>
-                                {% if order.assigned_trouser_maker.phone %}
-                                    <p class="text-xs text-gray-500">{{ order.assigned_trouser_maker.phone }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% endif %}
-                        
-                        {% if not order.assigned_tailor and not order.assigned_cutter and not order.assigned_trouser_maker %}
+                        {% if not order.assigned_tailor and not order.assigned_cutter and not order.assigned_trouser_maker and not order.has_shirt %}
                         <div class="text-center py-6">
                             <i data-lucide="users" class="w-10 h-10 text-gray-400 mx-auto mb-2"></i>
                             <p class="text-sm text-gray-500">Томилогдсон ажилтан байхгүй</p>
